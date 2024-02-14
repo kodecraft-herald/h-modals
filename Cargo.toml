@@ -10,3 +10,6 @@ license = "MIT"
 
 [dependencies]
 leptos = "0.6.5"
+
+[package.metadata.leptos]
+style-file = "style/output.css"
