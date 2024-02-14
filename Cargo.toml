@@ -3,6 +3,8 @@ name = "h_modals"
 version = "0.1.0"
 authors = ["herald"]
 edition = "2021"
+description = "A library for basic modals."
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
