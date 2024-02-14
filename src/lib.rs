@@ -1,3 +1,3 @@
-mod confirm_modal;
-mod status_modal;
-mod attributes;
+pub mod confirm_modal;
+pub mod status_modal;
+pub mod attributes;
