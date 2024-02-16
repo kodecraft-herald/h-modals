@@ -1,5 +1,5 @@
 use leptos::{RwSignal, IntoView, Show, view, component, SignalGet, SignalSet};
-use crate::attributes::enums::ComponentStatus;
+use crate::attributes::enums::{ComponentStatus, Position};
 
 #[component]
 pub fn StatusModal(
@@ -7,7 +7,11 @@ pub fn StatusModal(
     title: String,
     description: String,
     #[prop(optional)]
+    position: Option<Position>,
+    #[prop(optional)]
     status: Option<ComponentStatus>,
+    // #[prop(optional)]
+    // custom_class: Option<String>,
 ) -> impl IntoView
 {
     let status_class = match status {
@@ -19,11 +23,18 @@ pub fn StatusModal(
         _ => "modal-box bg-neutral rounded-box",
     };
 
+    let position_class = match position {
+        Some(Position::TopLeft) => "modal-top",
+        Some(Position::Middle) => "modal-middle",
+        Some(Position::BottomMiddle) => "modal-bottom-middle",
+        _ => "modal-top-middle",
+    };
+
     view! {
 
         <Show when=move || signal.get() fallback=|| ()>
             <div class = "blur-bg">
-                <div class="modal-top">
+                <div class={position_class}>
                     <div class={status_class}>
                         <h3 class="font-bold text-2xl text-black">{title.clone()}</h3>
                         <p class="py-4 text-black">{description.clone()}</p>
