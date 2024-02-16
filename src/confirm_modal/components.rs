@@ -2,6 +2,15 @@ use leptos::{RwSignal, ReadSignal, IntoView, Show, view, component, SignalGet, S
 
 use crate::attributes::enums::Position;
 
+/// Component for displaying a confirmation modal
+/// Accepts the following parameters:
+/// - signal: A `RwSignal<bool>` to control the visibility of the modal
+/// - title: The title of the modal
+/// - description: The description of the modal
+/// - function: A closure that will be called when the confirm button is clicked
+/// - pending_signal: A `ReadSignal<bool>` to control the visibility of the loading spinner
+/// - position[optional]: The [`Position`] of the modal (default is [`Position::Middle`])
+
 #[allow(non_snake_case)]
 #[component]
 pub fn ConfirmModal<C>(

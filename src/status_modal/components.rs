@@ -1,6 +1,16 @@
 use leptos::{RwSignal, IntoView, Show, view, component, SignalGet, SignalSet};
 use crate::attributes::enums::{ComponentStatus, Position};
 
+/// Component for displaying a status modal
+/// Accepts the following parameters:
+/// - signal: A `RwSignal<bool>` to control the visibility of the modal
+/// - title: The title of the modal
+/// - description: The description of the modal
+/// - position[optional]: The [`Position`] of the modal (default is [`Position::TopMiddle`])
+/// - status[optional]: The [`ComponentStatus`] of the modal (default is [`ComponentStatus::Neutral`])
+/// - button_status[optional]: The [`ComponentStatus`] of the button (default is `No Status`)
+/// - text_color[optional]: The [`ComponentStatus`] of the text (default is `Black Text`)
+
 #[component]
 pub fn StatusModal(
     signal: RwSignal<bool>,
