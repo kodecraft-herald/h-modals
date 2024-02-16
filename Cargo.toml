@@ -1,9 +1,9 @@
 [package]
 name = "h_modals"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["herald"]
 edition = "2021"
-description = "A component library for basic modals. WIP"
+description = "A leptos component library for basic modals. WIP"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
