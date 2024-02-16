@@ -2,7 +2,18 @@
 pub enum ComponentStatus{
 	Info,
 	Success,
-	Neutral, //Default
+	Neutral, // Default
 	Warning,
 	Error
+}
+
+#[allow(dead_code)]
+pub enum Position{
+	TopLeft,
+	TopMiddle, // Default
+	TopRight,
+	Middle,
+	BottomLeft,
+	BottomMiddle,
+	BottomRight,
 }
