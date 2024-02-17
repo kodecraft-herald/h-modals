@@ -162,8 +162,6 @@ let position_class = match position {
     _ => "modal-top-middle",
 };
 
-let on_click = move |_| function();
-
 view! {
     <Show when=move || signal.get() fallback=|| ()>
         <div class = "blur-bg">
