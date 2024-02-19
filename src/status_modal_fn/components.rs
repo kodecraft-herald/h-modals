@@ -1,5 +1,5 @@
 use crate::attributes::enums::{ComponentStatus, Position};
-use leptos::{component, view, IntoView, RwSignal, Show, SignalGet, SignalSet};
+use leptos::{component, view, IntoView, RwSignal, Show, SignalGet};
 
 /// Component for displaying a status modal that calls a function when closed.
 /// Accepts the following parameters:
@@ -18,7 +18,7 @@ pub fn StatusModalWithFunction<F>(
     signal: RwSignal<bool>,
     title: String,
     description: String,
-    function: F,
+    mut function: F,
     #[prop(optional)] position: Option<Position>,
     #[prop(optional)] status: Option<ComponentStatus>,
     #[prop(optional)] button_status: Option<ComponentStatus>,
@@ -74,6 +74,10 @@ where
         Some(Position::BottomMiddle) => "modal-bottom-middle",
         Some(Position::BottomRight) => "modal-bottom-right",
         _ => "modal-top-middle",
+    };
+
+    let on_click = move |_| {
+        function();
     };
 
     view! {
