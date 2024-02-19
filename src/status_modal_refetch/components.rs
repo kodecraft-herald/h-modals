@@ -1,7 +1,7 @@
 use crate::attributes::enums::{ComponentStatus, Position};
 use leptos::{component, view, IntoView, RwSignal, Show, SignalGet, SignalSet};
 
-/// Component for displaying a status modal
+/// Component for displaying a status modal that calls a function when closed.
 /// Accepts the following parameters:
 /// - signal: A `RwSignal<bool>` to control the visibility of the modal
 /// - title: The title of the modal
@@ -10,13 +10,15 @@ use leptos::{component, view, IntoView, RwSignal, Show, SignalGet, SignalSet};
 /// - status: The [`ComponentStatus`] of the modal (default is [`ComponentStatus::Neutral`])
 /// - button_status: The [`ComponentStatus`] of the button (default is `No Status`)
 /// - text_color: The [`ComponentStatus`] of the text (default is `Black Text`)
+/// - function: The closure that will be called after the modal is closed (Can be anything as long as the closure doesn't have parameters).
 
 #[allow(non_snake_case)]
 #[component]
-pub fn StatusModal<F>(
+pub fn StatusModalWithFunction<F>(
     signal: RwSignal<bool>,
     title: String,
     description: String,
+    function: F,
     #[prop(optional)] position: Option<Position>,
     #[prop(optional)] status: Option<ComponentStatus>,
     #[prop(optional)] button_status: Option<ComponentStatus>,
@@ -83,7 +85,7 @@ where
                         <h3 class=format!("font-bold text-2xl {}", text_header_class)>{title.clone()}</h3>
                         <p class=format!("py-4 {}", text_desc_class)>{description.clone()}</p>
                         <div class="modal-action">
-                            <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
+                            <button class={button_class} title="Close" on:click = on_click.clone()>Close</button>
                         </div>
                     </div>
                 </div>
