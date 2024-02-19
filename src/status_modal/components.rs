@@ -13,7 +13,7 @@ use leptos::{component, view, IntoView, RwSignal, Show, SignalGet, SignalSet};
 
 #[allow(non_snake_case)]
 #[component]
-pub fn StatusModal<F>(
+pub fn StatusModal(
     signal: RwSignal<bool>,
     title: String,
     description: String,
@@ -23,10 +23,7 @@ pub fn StatusModal<F>(
     #[prop(optional)] text_color: Option<ComponentStatus>,
     // #[prop(optional)]
     // custom_class: Option<String>,
-) -> impl IntoView
-where
-    F: FnMut() + Clone + 'static,
-{
+) -> impl IntoView {
     let status_class = match status {
         Some(ComponentStatus::Info) => "modal-box bg-info rounded-box",
         Some(ComponentStatus::Success) => "modal-box bg-success rounded-box",
