@@ -162,20 +162,6 @@ let position_class = match position {
     _ => "modal-top-middle",
 };
 
-let button_component = match function {
-    Some(mut function) => {
-        let on_click = move |_| {
-            function();
-        };
-        view! {
-            <button class={button_class} title="Close" on:click = on_click.clone()>Close</button>
-        }
-    },
-    None => view! {
-        <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
-    }
-};
-
 view! {
     <Show when=move || signal.get() fallback=|| ()>
         <div class = "blur-bg">
@@ -184,7 +170,7 @@ view! {
                     <h3 class=format!("font-bold text-2xl {}", text_header_class)>{title.clone()}</h3>
                     <p class=format!("py-4 {}", text_desc_class)>{description.clone()}</p>
                     <div class="modal-action">
-                        {button_component.clone()}
+                        <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
                     </div>
                 </div>
             </div>
