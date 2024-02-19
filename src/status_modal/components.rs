@@ -6,13 +6,15 @@ use crate::attributes::enums::{ComponentStatus, Position};
 /// - signal: A `RwSignal<bool>` to control the visibility of the modal
 /// - title: The title of the modal
 /// - description: The description of the modal
-/// - position[optional]: The [`Position`] of the modal (default is [`Position::TopMiddle`])
-/// - status[optional]: The [`ComponentStatus`] of the modal (default is [`ComponentStatus::Neutral`])
-/// - button_status[optional]: The [`ComponentStatus`] of the button (default is `No Status`)
-/// - text_color[optional]: The [`ComponentStatus`] of the text (default is `Black Text`)
+/// - position: The [`Position`] of the modal (default is [`Position::TopMiddle`])
+/// - status: The [`ComponentStatus`] of the modal (default is [`ComponentStatus::Neutral`])
+/// - button_status: The [`ComponentStatus`] of the button (default is `No Status`)
+/// - text_color: The [`ComponentStatus`] of the text (default is `Black Text`)
+/// - function: The closure that will be called after the modal is closed (Can be anything as long as the closure doesn't have parameters).
 
+#[allow(non_snake_case)]
 #[component]
-pub fn StatusModal(
+pub fn StatusModal<F>(
     signal: RwSignal<bool>,
     title: String,
     description: String,
@@ -24,9 +26,13 @@ pub fn StatusModal(
     button_status: Option<ComponentStatus>,
     #[prop(optional)]
     text_color: Option<ComponentStatus>,
+    #[prop(optional)]
+    function: Option<F>,
     // #[prop(optional)]
     // custom_class: Option<String>,
 ) -> impl IntoView
+where
+    F: FnMut() + Clone + 'static,
 {
     let status_class = match status {
         Some(ComponentStatus::Info) => "modal-box bg-info rounded-box",
@@ -75,6 +81,20 @@ pub fn StatusModal(
         _ => "modal-top-middle",
     };
 
+    let button_component = match function {
+        Some(mut function) => {
+            let on_click = move |_| {
+                function();
+            };
+            view! {
+                <button class={button_class} title="Close" on:click = on_click.clone()>Close</button>
+            }
+        },
+        None => view! {
+            <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
+        }
+    };
+
     view! {
 
         <Show when=move || signal.get() fallback=|| ()>
@@ -84,7 +104,7 @@ pub fn StatusModal(
                         <h3 class=format!("font-bold text-2xl {}", text_header_class)>{title.clone()}</h3>
                         <p class=format!("py-4 {}", text_desc_class)>{description.clone()}</p>
                         <div class="modal-action">
-                            <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
+                            {button_component.clone()}
                         </div>
                     </div>
                 </div>
