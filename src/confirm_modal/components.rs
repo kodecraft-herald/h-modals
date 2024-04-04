@@ -21,18 +21,24 @@ pub fn ConfirmModal<C>(
     pending_signal: ReadSignal<bool>,
     #[prop(optional)]
     position: Option<Position>,
+    #[prop(optional)] custom_position_class: Option<String>,
 ) -> impl IntoView
 where C: FnMut() + Clone + 'static,
 {
-    let position_class = match position {
-        Some(Position::TopLeft) => "modal-top-left",
-        Some(Position::TopMiddle) => "modal-top-middle",
-        Some(Position::TopRight) => "modal-top-right",
-        Some(Position::Middle) => "modal-middle",
-        Some(Position::BottomLeft) => "modal-bottom-left",
-        Some(Position::BottomMiddle) => "modal-bottom-middle",
-        Some(Position::BottomRight) => "modal-bottom-right",
-        _ => "modal-middle",
+    let position_class = match custom_position_class {
+        None => {
+            match position {
+                Some(Position::TopLeft) => "modal-top-left",
+                Some(Position::TopMiddle) => "modal-top-middle",
+                Some(Position::TopRight) => "modal-top-right",
+                Some(Position::Middle) => "modal-middle",
+                Some(Position::BottomLeft) => "modal-bottom-left",
+                Some(Position::BottomMiddle) => "modal-bottom-middle",
+                Some(Position::BottomRight) => "modal-bottom-right",
+                _ => "modal-top-middle",
+            }
+        },
+        Some(custom_class) => custom_class.as_str(),
     };
 
     let on_click = move |_| function();

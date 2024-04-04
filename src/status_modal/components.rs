@@ -21,8 +21,7 @@ pub fn StatusModal(
     #[prop(optional)] status: Option<ComponentStatus>,
     #[prop(optional)] button_status: Option<ComponentStatus>,
     #[prop(optional)] text_color: Option<ComponentStatus>,
-    // #[prop(optional)]
-    // custom_class: Option<String>,
+    #[prop(optional)] custom_position_class: Option<String>,
 ) -> impl IntoView {
     let status_class = match status {
         Some(ComponentStatus::Info) => "modal-box bg-info rounded-box",
@@ -60,15 +59,20 @@ pub fn StatusModal(
         _ => "btn btn-sm rounded",
     };
 
-    let position_class = match position {
-        Some(Position::TopLeft) => "modal-top-left",
-        Some(Position::TopMiddle) => "modal-top-middle",
-        Some(Position::TopRight) => "modal-top-right",
-        Some(Position::Middle) => "modal-middle",
-        Some(Position::BottomLeft) => "modal-bottom-left",
-        Some(Position::BottomMiddle) => "modal-bottom-middle",
-        Some(Position::BottomRight) => "modal-bottom-right",
-        _ => "modal-top-middle",
+    let position_class = match custom_position_class {
+        None => {
+            match position {
+                Some(Position::TopLeft) => "modal-top-left",
+                Some(Position::TopMiddle) => "modal-top-middle",
+                Some(Position::TopRight) => "modal-top-right",
+                Some(Position::Middle) => "modal-middle",
+                Some(Position::BottomLeft) => "modal-bottom-left",
+                Some(Position::BottomMiddle) => "modal-bottom-middle",
+                Some(Position::BottomRight) => "modal-bottom-right",
+                _ => "modal-top-middle",
+            }
+        },
+        Some(custom_class) => custom_class.as_str(),
     };
 
     view! {

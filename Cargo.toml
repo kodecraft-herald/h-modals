@@ -1,9 +1,9 @@
 [package]
 name = "h_modals"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["herald"]
 edition = "2021"
-description = "A leptos component library using tailwindcss for basic modals. WIP"
+description = "A leptos component library using tailwindcss for basic modals."
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/kodecraft-herald/h-modals"
