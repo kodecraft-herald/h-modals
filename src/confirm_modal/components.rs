@@ -28,24 +28,24 @@ where C: FnMut() + Clone + 'static,
     let position_class = match custom_position_class {
         None => {
             match position {
-                Some(Position::TopLeft) => "modal-top-left",
-                Some(Position::TopMiddle) => "modal-top-middle",
-                Some(Position::TopRight) => "modal-top-right",
-                Some(Position::Middle) => "modal-middle",
-                Some(Position::BottomLeft) => "modal-bottom-left",
-                Some(Position::BottomMiddle) => "modal-bottom-middle",
-                Some(Position::BottomRight) => "modal-bottom-right",
-                _ => "modal-top-middle",
+                Some(Position::TopLeft) => "modal-top-left".to_string(),
+                Some(Position::TopMiddle) => "modal-top-middle".to_string(),
+                Some(Position::TopRight) => "modal-top-right".to_string(),
+                Some(Position::Middle) => "modal-middle".to_string(),
+                Some(Position::BottomLeft) => "modal-bottom-left".to_string(),
+                Some(Position::BottomMiddle) => "modal-bottom-middle".to_string(),
+                Some(Position::BottomRight) => "modal-bottom-right".to_string(),
+                _ => "modal-top-middle".to_string(),
             }
         },
-        Some(custom_class) => custom_class.as_str(),
+        Some(custom_class) => custom_class,
     };
 
     let on_click = move |_| function();
     view! {
         <Show when=move || signal.get() fallback=|| ()>
             <div class = "blur-bg">
-                <div class={position_class}>
+                <div class={position_class.clone()}>
                     <div class="modal-box rounded-box">
                         <h3 class="font-bold text-2xl">{title.clone()}</h3>
                         <p class="py-4">{description.clone()}</p>
