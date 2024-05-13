@@ -22,7 +22,7 @@ pub fn StatusModalWithFunction<F>(
     #[prop(optional)] position: Option<Position>,
     #[prop(optional)] status: Option<ComponentStatus>,
     #[prop(optional)] button_status: Option<ComponentStatus>,
-    #[prop(optional)] header_text_color: Option<ComponentStatus>,
+    #[prop(optional)] header_text_color: Option<Colors>,
     #[prop(optional)] desc_text_color: Option<Colors>,
     #[prop(optional)] custom_position_class: Option<String>,
 ) -> impl IntoView
@@ -39,11 +39,13 @@ where
     };
 
     let text_header_class = match header_text_color {
-        Some(ComponentStatus::Info) => "text-info",
-        Some(ComponentStatus::Success) => "text-success",
-        Some(ComponentStatus::Neutral) => "text-neutral",
-        Some(ComponentStatus::Warning) => "text-warning",
-        Some(ComponentStatus::Error) => "text-error",
+        Some(Colors::White) => "text-white",
+        Some(Colors::Black) => "text-black",
+        Some(Colors::Gray) => "text-gray",
+        Some(Colors::Red) => "text-red",
+        Some(Colors::Blue) => "text-blue",
+        Some(Colors::Green) => "text-green",
+        Some(Colors::Yellow) => "text-yellow",
         _ => "",
     };
 
@@ -51,6 +53,10 @@ where
         Some(Colors::White) => "text-white",
         Some(Colors::Black) => "text-black",
         Some(Colors::Gray) => "text-gray",
+        Some(Colors::Red) => "text-red",
+        Some(Colors::Blue) => "text-blue",
+        Some(Colors::Green) => "text-green",
+        Some(Colors::Yellow) => "text-yellow",
         _ => "",
     };
 

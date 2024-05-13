@@ -13,7 +13,11 @@ pub enum ComponentStatus{
 pub enum Colors{
 	Black,
 	White,
-	Gray
+	Gray,
+	Blue,
+	Green,
+	Yellow,
+	Red
 }
 
 /// Enum for the different positions of the modal.

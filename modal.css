@@ -40,6 +40,22 @@
 .text-gray {
     color: gray;
 }
+
+.text-blue {
+    color: oklch(var(--in) / var(--tw-bg-opacity)) !important;
+}
+
+.text-red {
+    color: oklch(var(--er) / var(--tw-bg-opacity)) !important;
+}
+
+.text-green {
+    color: oklch(var(--su) / var(--tw-bg-opacity)) !important;
+}
+
+.text-yellow {
+    color: oklch(var(--wa) / var(--tw-bg-opacity)) !important;
+}
   
   
 .bg-error {
