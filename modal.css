@@ -32,6 +32,14 @@
 .text-black {
     color: rgb(0 0 0);
 }
+
+.text-white {
+    color: white;
+}
+
+.text-gray {
+    color: gray;
+}
   
   
 .bg-error {

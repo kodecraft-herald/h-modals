@@ -1,6 +1,6 @@
 [package]
 name = "h_modals"
-version = "0.2.4"
+version = "0.2.5"
 authors = ["herald"]
 edition = "2021"
 description = "A leptos component library using tailwindcss for basic modals."

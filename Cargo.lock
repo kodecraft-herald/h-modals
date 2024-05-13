@@ -386,7 +386,7 @@ dependencies = [
 
 [[package]]
 name = "h_modals"
-version = "0.2.4"
+version = "0.2.5"
 dependencies = [
  "leptos",
 ]

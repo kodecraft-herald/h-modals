@@ -1,4 +1,4 @@
-use crate::attributes::enums::{ComponentStatus, Position};
+use crate::attributes::enums::{Colors, ComponentStatus, Position};
 use leptos::{component, view, IntoView, RwSignal, Show, SignalGet};
 
 /// Component for displaying a status modal that calls a function when closed.
@@ -22,7 +22,8 @@ pub fn StatusModalWithFunction<F>(
     #[prop(optional)] position: Option<Position>,
     #[prop(optional)] status: Option<ComponentStatus>,
     #[prop(optional)] button_status: Option<ComponentStatus>,
-    #[prop(optional)] text_color: Option<ComponentStatus>,
+    #[prop(optional)] header_text_color: Option<ComponentStatus>,
+    #[prop(optional)] desc_text_color: Option<Colors>,
     #[prop(optional)] custom_position_class: Option<String>,
 ) -> impl IntoView
 where
@@ -37,22 +38,20 @@ where
         _ => "",
     };
 
-    let text_header_class = match text_color {
+    let text_header_class = match header_text_color {
         Some(ComponentStatus::Info) => "text-info",
         Some(ComponentStatus::Success) => "text-success",
-        Some(ComponentStatus::Neutral) => "",
+        Some(ComponentStatus::Neutral) => "text-neutral",
         Some(ComponentStatus::Warning) => "text-warning",
         Some(ComponentStatus::Error) => "text-error",
-        _ => "text-black",
+        _ => "",
     };
 
-    let text_desc_class = match text_color {
-        Some(ComponentStatus::Info) => "text-black",
-        Some(ComponentStatus::Success) => "text-black",
-        Some(ComponentStatus::Neutral) => "",
-        Some(ComponentStatus::Warning) => "text-black",
-        Some(ComponentStatus::Error) => "text-black",
-        _ => "text-black",
+    let text_desc_class = match desc_text_color {
+        Some(Colors::White) => "text-white",
+        Some(Colors::Black) => "text-black",
+        Some(Colors::Gray) => "text-gray",
+        _ => "",
     };
 
     let button_class = match button_status {

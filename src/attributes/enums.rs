@@ -8,6 +8,14 @@ pub enum ComponentStatus{
 	Error
 }
 
+/// Enum for the different types of colors.
+#[allow(dead_code)]
+pub enum Colors{
+	Black,
+	White,
+	Gray
+}
+
 /// Enum for the different positions of the modal.
 #[allow(dead_code)]
 pub enum Position{
