@@ -29,12 +29,12 @@ where
     F: FnMut() + Clone + 'static,
 {
     let status_class = match status {
-        Some(ComponentStatus::Info) => "modal-box bg-info rounded-box",
-        Some(ComponentStatus::Success) => "modal-box bg-success rounded-box",
-        Some(ComponentStatus::Neutral) => "modal-box bg-neutral rounded-box",
-        Some(ComponentStatus::Warning) => "modal-box bg-warning rounded-box",
-        Some(ComponentStatus::Error) => "modal-box bg-error rounded-box",
-        _ => "modal-box bg-neutral rounded-box",
+        Some(ComponentStatus::Info) => "bg-info",
+        Some(ComponentStatus::Success) => "bg-success",
+        Some(ComponentStatus::Neutral) => "bg-neutral",
+        Some(ComponentStatus::Warning) => "bg-warning",
+        Some(ComponentStatus::Error) => "bg-error",
+        _ => "",
     };
 
     let text_header_class = match text_color {
@@ -47,12 +47,12 @@ where
     };
 
     let text_desc_class = match text_color {
-        Some(ComponentStatus::Info) => "text-info-content",
-        Some(ComponentStatus::Success) => "text-success-content",
-        Some(ComponentStatus::Neutral) => "text-neutral-content",
-        Some(ComponentStatus::Warning) => "text-warning-content",
-        Some(ComponentStatus::Error) => "text-error-content",
-        _ => "text-black",
+        Some(ComponentStatus::Info) => "text-black",
+        Some(ComponentStatus::Success) => "text-black",
+        Some(ComponentStatus::Neutral) => "",
+        Some(ComponentStatus::Warning) => "text-black",
+        Some(ComponentStatus::Error) => "text-black",
+        _ => "",
     };
 
     let button_class = match button_status {
@@ -67,14 +67,14 @@ where
     let position_class = match custom_position_class {
         None => {
             match position {
-                Some(Position::TopLeft) => "modal-top-left".to_string(),
-                Some(Position::TopMiddle) => "modal-top-middle".to_string(),
-                Some(Position::TopRight) => "modal-top-right".to_string(),
-                Some(Position::Middle) => "modal-middle".to_string(),
-                Some(Position::BottomLeft) => "modal-bottom-left".to_string(),
-                Some(Position::BottomMiddle) => "modal-bottom-middle".to_string(),
-                Some(Position::BottomRight) => "modal-bottom-right".to_string(),
-                _ => "modal-top-middle".to_string(),
+                Some(Position::TopLeft) => "items-start justify-start".to_string(),
+                Some(Position::TopCenter) => "items-start justify-center".to_string(),
+                Some(Position::TopRight) => "items-start justify-end".to_string(),
+                Some(Position::Center) => "items-center justify-center".to_string(),
+                Some(Position::BottomLeft) => "items-end justify-start".to_string(),
+                Some(Position::BottomCenter) => "items-end justify-center".to_string(),
+                Some(Position::BottomRight) => "items-end justify-end".to_string(),
+                _ => "items-center justify-center".to_string(),
             }
         },
         Some(custom_class) => custom_class,
@@ -88,10 +88,10 @@ where
 
         <Show when=move || signal.get() fallback=|| ()>
             <div class = "blur-bg">
-                <div class={position_class.clone()}>
-                    <div class={status_class}>
+                <div class=format!("sticky top-0 flex h-screen {}", position_class.clone())>
+                    <div class=format!("flex flex-col gap-4 m-2 modal-box {}", status_class)>
                         <h3 class=format!("font-bold text-2xl {}", text_header_class)>{title.clone()}</h3>
-                        <p class=format!("py-4 {}", text_desc_class)>{description.clone()}</p>
+                        <p class=format!("py-4 text-lg {}", text_desc_class)>{description.clone()}</p>
                         <div class="modal-action">
                             <button class={button_class} title="Close" on:click = on_click.clone()>Close</button>
                         </div>

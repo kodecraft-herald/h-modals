@@ -9,7 +9,7 @@ view! {
         signal=modal
         title="TITLE!".to_string()
         description="The description goes here.".to_string()
-        position=Position::TopMiddle
+        position=Position::TopCenter
         status=ComponentStatus::Success
     />
 }
@@ -70,15 +70,20 @@ pub async fn server_function() -> Result<String, ServerFnError>{
 ## what goes inside the confirm modal:
 ```rust
 
-let position_class = match position {
-    Some(Position::TopLeft) => "modal-top-left",
-    Some(Position::TopMiddle) => "modal-top-middle",
-    Some(Position::TopRight) => "modal-top-right",
-    Some(Position::Middle) => "modal-middle",
-    Some(Position::BottomLeft) => "modal-bottom-left",
-    Some(Position::BottomMiddle) => "modal-bottom-middle",
-    Some(Position::BottomRight) => "modal-bottom-right",
-    _ => "modal-middle",
+let position_class = match custom_position_class {
+    None => {
+        match position {
+            Some(Position::TopLeft) => "items-start justify-start".to_string(),
+            Some(Position::TopCenter) => "items-start justify-center".to_string(),
+            Some(Position::TopRight) => "items-start justify-end".to_string(),
+            Some(Position::Center) => "items-center justify-center".to_string(),
+            Some(Position::BottomLeft) => "items-end justify-start".to_string(),
+            Some(Position::BottomCenter) => "items-end justify-center".to_string(),
+            Some(Position::BottomRight) => "items-end justify-end".to_string(),
+            _ => "items-center justify-center".to_string(),
+        }
+    },
+    Some(custom_class) => custom_class,
 };
 
 let on_click = move |_| function();
@@ -86,10 +91,10 @@ let on_click = move |_| function();
 view! {
     <Show when=move || signal.get() fallback=|| ()>
         <div class = "blur-bg">
-            <div class={position_class}>
-                <div class="modal-box rounded-box">
+            <div class=format!("sticky top-0 flex h-screen {}", position_class.clone())>
+                <div class=format!("flex flex-col gap-4 m-2 modal-box {}", status_class)>
                     <h3 class="font-bold text-2xl">{title.clone()}</h3>
-                    <p class="py-4">{description.clone()}</p>
+                    <p class="py-4 text-lg">{description.clone()}</p>
                     <div class="modal-action">
                         <button class="btn btn-error btn-sm rounded" prop:disabled=pending_signal title="Cancel" on:click = move |_| signal.set(false)>Cancel</button>
                         {
@@ -116,12 +121,12 @@ view! {
 ```rust
 
 let status_class = match status {
-    Some(ComponentStatus::Info) => "modal-box bg-info rounded-box",
-    Some(ComponentStatus::Success) => "modal-box bg-success rounded-box",
-    Some(ComponentStatus::Neutral) => "modal-box bg-neutral rounded-box",
-    Some(ComponentStatus::Warning) => "modal-box bg-warning rounded-box",
-    Some(ComponentStatus::Error) => "modal-box bg-error rounded-box",
-    _ => "modal-box bg-neutral rounded-box",
+    Some(ComponentStatus::Info) => "bg-info",
+    Some(ComponentStatus::Success) => "bg-success",
+    Some(ComponentStatus::Neutral) => "bg-neutral",
+    Some(ComponentStatus::Warning) => "bg-warning",
+    Some(ComponentStatus::Error) => "bg-error",
+    _ => "",
 };
 
 let text_header_class = match text_color {
@@ -134,12 +139,12 @@ let text_header_class = match text_color {
 };
 
 let text_desc_class = match text_color {
-    Some(ComponentStatus::Info) => "text-info-content",
-    Some(ComponentStatus::Success) => "text-success-content",
-    Some(ComponentStatus::Neutral) => "text-neutral-content",
-    Some(ComponentStatus::Warning) => "text-warning-content",
-    Some(ComponentStatus::Error) => "text-error-content",
-    _ => "text-black",
+    Some(ComponentStatus::Info) => "text-black",
+    Some(ComponentStatus::Success) => "text-black",
+    Some(ComponentStatus::Neutral) => "",
+    Some(ComponentStatus::Warning) => "text-black",
+    Some(ComponentStatus::Error) => "text-black",
+    _ => "",
 };
 
 let button_class = match button_status {
@@ -151,24 +156,29 @@ let button_class = match button_status {
     _ => "btn btn-sm rounded",
 };
 
-let position_class = match position {
-    Some(Position::TopLeft) => "modal-top-left",
-    Some(Position::TopMiddle) => "modal-top-middle",
-    Some(Position::TopRight) => "modal-top-right",
-    Some(Position::Middle) => "modal-middle",
-    Some(Position::BottomLeft) => "modal-bottom-left",
-    Some(Position::BottomMiddle) => "modal-bottom-middle",
-    Some(Position::BottomRight) => "modal-bottom-right",
-    _ => "modal-top-middle",
+let position_class = match custom_position_class {
+    None => {
+        match position {
+            Some(Position::TopLeft) => "items-start justify-start".to_string(),
+            Some(Position::TopCenter) => "items-start justify-center".to_string(),
+            Some(Position::TopRight) => "items-start justify-end".to_string(),
+            Some(Position::Center) => "items-center justify-center".to_string(),
+            Some(Position::BottomLeft) => "items-end justify-start".to_string(),
+            Some(Position::BottomCenter) => "items-end justify-center".to_string(),
+            Some(Position::BottomRight) => "items-end justify-end".to_string(),
+            _ => "items-center justify-center".to_string(),
+        }
+    },
+    Some(custom_class) => custom_class,
 };
 
 view! {
     <Show when=move || signal.get() fallback=|| ()>
         <div class = "blur-bg">
-            <div class={position_class}>
-                <div class={status_class}>
+            <div class=format!("sticky top-0 flex h-screen {}", position_class.clone())>
+                <div class=format!("flex flex-col gap-4 m-2 modal-box {}", status_class)>
                     <h3 class=format!("font-bold text-2xl {}", text_header_class)>{title.clone()}</h3>
-                    <p class=format!("py-4 {}", text_desc_class)>{description.clone()}</p>
+                    <p class=format!("py-4 text-lg{}", text_desc_class)>{description.clone()}</p>
                     <div class="modal-action">
                         <button class={button_class} title="Close" on:click = move |_| signal.set(false)>Close</button>
                     </div>

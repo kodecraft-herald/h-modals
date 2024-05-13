@@ -12,10 +12,10 @@ pub enum ComponentStatus{
 #[allow(dead_code)]
 pub enum Position{
 	TopLeft,
-	TopMiddle,
+	TopCenter,
 	TopRight,
-	Middle,
+	Center,
 	BottomLeft,
-	BottomMiddle,
+	BottomCenter,
 	BottomRight,
 }

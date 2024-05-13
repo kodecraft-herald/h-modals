@@ -9,7 +9,7 @@ use crate::attributes::enums::Position;
 /// - description: The description of the modal
 /// - function: A closure that will be called when the confirm button is clicked
 /// - pending_signal: A `ReadSignal<bool>` to control the visibility of the loading spinner
-/// - position[optional]: The [`Position`] of the modal (default is [`Position::Middle`])
+/// - position[optional]: The [`Position`] of the modal (default is [`Position::Center`])
 
 #[allow(non_snake_case)]
 #[component]
@@ -28,14 +28,14 @@ where C: FnMut() + Clone + 'static,
     let position_class = match custom_position_class {
         None => {
             match position {
-                Some(Position::TopLeft) => "modal-top-left".to_string(),
-                Some(Position::TopMiddle) => "modal-top-middle".to_string(),
-                Some(Position::TopRight) => "modal-top-right".to_string(),
-                Some(Position::Middle) => "modal-middle".to_string(),
-                Some(Position::BottomLeft) => "modal-bottom-left".to_string(),
-                Some(Position::BottomMiddle) => "modal-bottom-middle".to_string(),
-                Some(Position::BottomRight) => "modal-bottom-right".to_string(),
-                _ => "modal-top-middle".to_string(),
+                Some(Position::TopLeft) => "items-start justify-start".to_string(),
+                Some(Position::TopCenter) => "items-start justify-center".to_string(),
+                Some(Position::TopRight) => "items-start justify-end".to_string(),
+                Some(Position::Center) => "items-center justify-center".to_string(),
+                Some(Position::BottomLeft) => "items-end justify-start".to_string(),
+                Some(Position::BottomCenter) => "items-end justify-center".to_string(),
+                Some(Position::BottomRight) => "items-end justify-end".to_string(),
+                _ => "items-center justify-center".to_string(),
             }
         },
         Some(custom_class) => custom_class,
@@ -45,10 +45,10 @@ where C: FnMut() + Clone + 'static,
     view! {
         <Show when=move || signal.get() fallback=|| ()>
             <div class = "blur-bg">
-                <div class={position_class.clone()}>
-                    <div class="modal-box rounded-box">
+                <div class=format!("sticky top-0 flex h-screen {}", position_class.clone())>
+                    <div class="flex flex-col gap-4 m-2 modal-box">
                         <h3 class="font-bold text-2xl">{title.clone()}</h3>
-                        <p class="py-4">{description.clone()}</p>
+                        <p class="py-4 text-lg">{description.clone()}</p>
                         <div class="modal-action">
                             <button class="btn btn-error btn-sm rounded" prop:disabled=pending_signal title="Cancel" on:click = move |_| signal.set(false)>Cancel</button>
                             {
