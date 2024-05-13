@@ -35,7 +35,7 @@ pub fn StatusModal(
     let text_header_class = match text_color {
         Some(ComponentStatus::Info) => "text-info",
         Some(ComponentStatus::Success) => "text-success",
-        Some(ComponentStatus::Neutral) => "text-neutral",
+        Some(ComponentStatus::Neutral) => "",
         Some(ComponentStatus::Warning) => "text-warning",
         Some(ComponentStatus::Error) => "text-error",
         _ => "text-black",
@@ -47,7 +47,7 @@ pub fn StatusModal(
         Some(ComponentStatus::Neutral) => "",
         Some(ComponentStatus::Warning) => "text-black",
         Some(ComponentStatus::Error) => "text-black",
-        _ => "",
+        _ => "text-black",
     };
 
     let button_class = match button_status {
